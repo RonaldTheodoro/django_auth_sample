@@ -1,0 +1,23 @@
+<!DOCTYPE>
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body>
+    <p>
+        Welcome
+        {% if user.is_authenticated %}
+            {{ user.first_name }}
+        {% else %}
+            Anonymous user
+        {% endif %}
+    </p>
+
+    {% if user.is_authenticated %}
+        <p><a href="{% url 'users:logout' %}">Logout</a>.</p>
+    {% else %}
+        <p><a href="{% url 'users:register' %}">Register</a>.</p>
+        <p><a href="{% url 'users:login' %}">Login</a>.</p>
+    {% endif %}
+</body>
+</html>
