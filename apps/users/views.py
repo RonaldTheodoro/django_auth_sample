@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.views.generic import CreateView
 from django.core.urlresolvers import reverse
 from django.core.urlresolvers import reverse_lazy
+from django.contrib.auth import authenticate 
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.views import login
 from django.contrib.auth.views import logout
 from apps.users.forms import CustomUserCreationForm
@@ -30,3 +32,17 @@ class RegistrationView(CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('users:login')    
     template_name = 'user/register.html'
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        is_valid = form.is_valid()
+        response = super().post(request, *args, **kwargs)
+
+        if is_valid:
+            new_user = authenticate(
+                username=form.cleaned_data['email'],
+                password=form.cleaned_data['password1']
+            )
+            auth_login(request, new_user)
+            return HttpResponseRedirect(reverse_lazy('users:home'))
+        return response

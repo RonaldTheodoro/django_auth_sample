@@ -13,13 +13,11 @@ User auth sample tutorial
 5) Configure the instance with .env
 
 ```console
-
 git clone https://github.com/RonaldTheodoro/django_auth_sample.git django_auth
 cd django_auth
 python -m venv .venv
-pip install --upgrade pip
 source .venv/bin/activate
+pip install --upgrade pip
 pip install -r requirements.txt
 cp contrib/env-sample .env
-
 ```
